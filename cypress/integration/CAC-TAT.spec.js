@@ -1,4 +1,5 @@
 describe('Central de Atendimento ao Cliente TAT', () => {
+  //Aula02
   beforeEach(() => {
     cy.visit('../../src/index.html');
   });
@@ -71,5 +72,22 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   it('envia o formuário com sucesso usando um comando customizado', () => {
     cy.fillMandatoryFieldsAndSubmit();
     cy.get('.success').should('be.visible');
+  });
+
+  //Aula 03 - Get valor de um SELECT
+  it.only('envia o formuário com sucesso usando um comando customizado', () => {
+    cy.get('select[id="product"]')
+      .select('YouTube')
+      .should('have.value', 'youtube');
+  });
+
+  it.only('seleciona um produto (Mentoria) por seu valor (value)', () => {
+    cy.get('select[id="product"]')
+      .select('mentoria')
+      .should('have.value', 'mentoria');
+  });
+
+  it.only('seleciona um produto (Blog) por seu índice', () => {
+    cy.get('select[id="product"]').select(1).should('have.value', 'blog');
   });
 });
