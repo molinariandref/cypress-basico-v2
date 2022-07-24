@@ -36,7 +36,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('input[id="firstName"]').type('Andre');
     cy.get('input[id="lastName"]').type('Molinari');
     cy.get('input[id="email"]').type('molinari.andref@gmail.com');
-    cy.get('input[id="phone-checkbox"]').click();
+    cy.get('input[id="phone-checkbox"]').check();
     cy.contains('button', 'Enviar').click();
     cy.get('.error').should('be.visible');
   });
@@ -74,20 +74,36 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('.success').should('be.visible');
   });
 
-  //Aula 03 - Get valor de um SELECT
-  it.only('envia o formuário com sucesso usando um comando customizado', () => {
+  //Aula 03 - Get SELECT
+  it('envia o formuário com sucesso usando um comando customizado', () => {
     cy.get('select[id="product"]')
       .select('YouTube')
       .should('have.value', 'youtube');
   });
 
-  it.only('seleciona um produto (Mentoria) por seu valor (value)', () => {
+  it('seleciona um produto (Mentoria) por seu valor (value)', () => {
     cy.get('select[id="product"]')
       .select('mentoria')
       .should('have.value', 'mentoria');
   });
 
-  it.only('seleciona um produto (Blog) por seu índice', () => {
+  it('seleciona um produto (Blog) por seu índice', () => {
     cy.get('select[id="product"]').select(1).should('have.value', 'blog');
+  });
+
+  //Aula 04 - Get RADIO BUTTON
+  it.only('marca o tipo de atendimento "Feedback"', () => {
+    cy.get('input[type="radio"][value="feedback"]')
+      .check()
+      .should('have.value', 'feedback');
+  });
+
+  it.only('marca cada tipo de atendimento', () => {
+    cy.get('input[type="radio"]')
+      .should('have.length', 3)
+      .each(($radio) => {
+        cy.wrap($radio).check();
+        cy.wrap($radio).should('be.checked');
+      });
   });
 });
