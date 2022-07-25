@@ -118,7 +118,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
 
   //Aula 06 - Upload files
-  it.only('seleciona um arquivo da pasta fixtures', () => {
+  it('seleciona um arquivo da pasta fixtures', () => {
     cy.get('input[type="file"]#file-upload')
       .should('not.have.value')
       .selectFile('./cypress/fixtures/example.json')
@@ -127,7 +127,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       });
   });
 
-  it.only('seleciona um arquivo simulando um drag-and-drop', () => {
+  it('seleciona um arquivo simulando um drag-and-drop', () => {
     cy.get('input[type="file"]#file-upload')
       .should('not.have.value')
       .selectFile('./cypress/fixtures/example.json', {
@@ -138,12 +138,21 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       });
   });
 
-  it.only('seleciona um arquivo utilizando uma fixture para qual foi dada um alias', () => {
+  it('seleciona um arquivo utilizando uma fixture para qual foi dada um alias', () => {
     cy.fixture('example.json').as('sampleFile');
     cy.get('input[type="file"]#file-upload')
       .selectFile('@sampleFile')
       .should(($input) => {
         expect($input[0].files[0].name).to.equal('example.json');
       });
+  });
+
+  //Aula 07 - Multiplas abas
+  it.only('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+    cy.get('a[href="privacy.html"]').should('have.attr', 'target', '_blank'); //Espera que o atributo TARGET seja igual a _BLANK
+  });
+
+  it.only('acessa a página da política de privacidade removendo o target e então clicanco no link', () => {
+    cy.get('a[href="privacy.html"]').invoke('removeAttr', 'target').click(); //Remover elemento target para abrir pagina em seguida
   });
 });
